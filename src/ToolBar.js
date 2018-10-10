@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 
 class ToolBar extends React.Component {
+
+  toggleCompose = (e) => {
+    e.preventDefault();
+
+    this.props.changeCompose()
+  }
+
   render() {
     return (
       <div className="row toolbar">
@@ -9,6 +16,10 @@ class ToolBar extends React.Component {
             <span className="badge badge">2</span>
             unread messages
           </p>
+
+          <button className="btn btn-danger" onClick={ this.toggleCompose }>
+            <i className="fa fa-plus"></i>
+          </button>
 
           <button className="btn btn-default">
             <i className="fa fa-check-square-o"></i>

@@ -7,7 +7,9 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state={
-      initialMessages:[]
+      initialMessages:[],
+      composeWindow: false,
+      selectedMessages: []
     }
   }
 
@@ -19,13 +21,36 @@ class App extends Component {
     });
   }
 
+
+
+  changeCompose = () => {
+    var currentBool = this.state.composeWindow;
+    this.setState({
+      composeWindow: !currentBool,
+    })
+  }
+
+  selectToggle = (id) => {
+    //NOT WORKING PROPERLY
+    if (this.state.selectedMessages === []){
+      this.setState({
+        selectedMessages: id
+      })
+    } else if (this.state.selectedMessages.includes(id)){
+      this.setState({
+        selectedMessages: this.state.selectedMessages.concat(id)
+      })
+    }
+    console.log(this.state.selectedMessages)
+  }
+
   render() {
     return (
       <div className="App">
         <h1> REACT INBOX </h1>
         <div className="components">
-          <ToolBar />
-          <MessageList initialMessages={ this.state.initialMessages } />
+          <ToolBar changeCompose={ this.changeCompose }/>
+          <MessageList initialMessages={ this.state.initialMessages } composeWindow={ this.state.composeWindow } selectToggle={ this.selectToggle } currentSelected={ this.state.selectedMessages }/>
         </div>
       </div>
     );

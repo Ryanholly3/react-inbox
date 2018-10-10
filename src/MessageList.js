@@ -3,13 +3,9 @@ import Message from './Message';
 
 class MessageList extends React.Component {
 
-  renderList(){
-    return this.props.initialMessages.map((message, i) => <Message key={ i } subject={ message.subject } read={ message.read } starred={ message.starred} labels={ message.labels} body={ message.body }/>)
-  }
-
-  render() {
-    return (
-      <div className="messages">
+  composeRender(){
+    if(this.props.composeWindow === true ){
+      return(
         <div className="ComposeMessage">
           <form className="form-horizontal well">
             <div className="form-group">
@@ -36,6 +32,18 @@ class MessageList extends React.Component {
             </div>
           </form>
         </div>
+      )
+    }
+  }
+
+  renderList(){
+    return this.props.initialMessages.map((message, i) => <Message key={ i } id={ message.id } subject={ message.subject } read={ message.read } starred={ message.starred } labels={ message.labels} body={ message.body } selectToggle={ this.props.selectToggle } currentSelected={ this.props.currentSelected }/>)
+  }
+
+  render() {
+    return (
+      <div className="messages">
+        { this.composeRender() }
         <div className="messageList">
           { this.renderList() }
         </div>
