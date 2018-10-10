@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import Message from './Message';
 
 class MessageList extends React.Component {
 
   renderList(){
+    return this.props.initialMessages.map((message, i) => <Message key={ i } subject={ message.subject } read={ message.read } starred={ message.starred} labels={ message.labels} body={ message.body }/>)
   }
 
   render() {
@@ -35,7 +37,7 @@ class MessageList extends React.Component {
           </form>
         </div>
         <div className="messageList">
-          {  }
+          { this.renderList() }
         </div>
       </div>
     );

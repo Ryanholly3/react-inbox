@@ -7,8 +7,16 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state={
-      messages: []
+      initialMessages:[]
     }
+  }
+
+  async componentDidMount() {
+    const response = await fetch('http://localhost:8082/api/messages');
+    const json = await response.json();
+    this.setState({
+      initialMessages: json,
+    });
   }
 
   render() {
@@ -17,7 +25,7 @@ class App extends Component {
         <h1> REACT INBOX </h1>
         <div className="components">
           <ToolBar />
-          <MessageList />
+          <MessageList initialMessages={ this.state.initialMessages } />
         </div>
       </div>
     );
