@@ -2,10 +2,40 @@ import React, { Component } from 'react';
 
 class ToolBar extends React.Component {
 
+  //********* CLASS CHANGING METHODS ************//
+
   toggleCompose = (e) => {
     e.preventDefault();
-
     this.props.changeCompose()
+  }
+
+  toggleAll = (e) => {
+    e.preventDefault();
+
+    if(this.props.currentSelected.length === this.props.initialMessages.length){
+      this.props.unselectToggleAll();
+    } else {
+      this.props.selectToggleAll();
+    }
+  }
+
+  //********** RENDERING METHODS *************//
+
+  selectBoxRender = () => {
+
+    if(this.props.currentSelected.length === this.props.initialMessages.length){
+      return(
+          <i className="fa fa-check-square-o"></i>
+      )
+    } else if(this.props.currentSelected.length > 0){
+      return(
+          <i className="fa fa-minus-square-o"></i>
+      )
+    } else if(this.props.currentSelected.length === 0){
+      return(
+          <i className="fa fa-square-o"></i>
+      )
+    }
   }
 
   render() {
@@ -21,8 +51,8 @@ class ToolBar extends React.Component {
             <i className="fa fa-plus"></i>
           </button>
 
-          <button className="btn btn-default">
-            <i className="fa fa-check-square-o"></i>
+          <button className="btn btn-default" onClick={ this.toggleAll }>
+            { this.selectBoxRender() }
           </button>
 
           <button className="btn btn-default">

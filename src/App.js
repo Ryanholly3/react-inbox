@@ -11,6 +11,7 @@ class App extends Component {
       composeWindow: false,
       selectedMessages: []
     }
+    this.selectToggleAll = this.selectToggleAll.bind(this)
   }
 
   async componentDidMount() {
@@ -52,12 +53,28 @@ class App extends Component {
     }
   }
 
+  selectToggleAll = () => {
+    var allIds = []
+    for(var i = 0; i < this.state.initialMessages.length; i++) {
+      allIds.push(this.state.initialMessages[i].id.toString())
+    }
+    this.setState({
+      selectedMessages: allIds
+    })
+  }
+
+  unselectToggleAll = () => {
+    this.setState({
+      selectedMessages: []
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <h1> REACT INBOX </h1>
         <div className="components">
-          <ToolBar changeCompose={ this.changeCompose }/>
+          <ToolBar changeCompose={ this.changeCompose } selectToggleAll={ this.selectToggleAll } unselectToggleAll={ this.unselectToggleAll } initialMessages={ this.state.initialMessages } currentSelected={ this.state.selectedMessages }/>
           <MessageList initialMessages={ this.state.initialMessages } composeWindow={ this.state.composeWindow } selectToggle={ this.selectToggle } currentSelected={ this.state.selectedMessages }/>
         </div>
       </div>
