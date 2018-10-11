@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Label from './Label'
 
+
 class Message extends React.Component {
 
+  //*********** CLASS CHANGING METHODS ************//
   bodyMessage = () => {
       return(
         <div className="row message-body">
@@ -13,6 +15,16 @@ class Message extends React.Component {
       )
   }
 
+  changeSelected = (e) => {
+    e.preventDefault();
+
+    var strSelect = this.props.id.toString();
+    console.log(strSelect)
+    this.props.selectToggle(strSelect);
+  }
+
+
+  //********* RENDER METHODS ************//
   readStatus = () => {
     if(this.props.read === false){
       return 'unread';
@@ -37,20 +49,16 @@ class Message extends React.Component {
     }
   }
 
-  selectToggle = (e) => {
-    e.preventDefault();
-
-    //NOT WORKING PROPERLY
-    var strSelect = this.props.id.toString()
-    var modSelect = [];
-    modSelect.push(strSelect)
-    this.props.selectToggle(modSelect)
-
-    if(this.props.currentSelected.includes(e.target.key)){
-      return '';
-    } else  {
+  selectRender = () => {
+    if(this.props.currentSelected.includes(this.props.id.toString())){
       return 'selected';
+    } else  {
+      return '';
     }
+
+    console.log('this.props.id:', this.props.id);
+    console.log('this.props.currentSelected:', this.props.currentSelected)
+
   }
 
   labeled = () => {
@@ -60,7 +68,7 @@ class Message extends React.Component {
   render(){
     return(
       <form>
-        <div className={`row message ${this.readStatus()}`} onClick={ this.selectToggle }>
+        <div className={`row message ${this.readStatus()} ${this.selectRender()}`} onClick={ this.changeSelected }>
           <div className="col-xs-1">
             <div className="row">
               <div className="col-xs-2">

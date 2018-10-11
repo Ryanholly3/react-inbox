@@ -31,17 +31,25 @@ class App extends Component {
   }
 
   selectToggle = (id) => {
-    //NOT WORKING PROPERLY
-    if (this.state.selectedMessages === []){
-      this.setState({
-        selectedMessages: id
-      })
-    } else if (this.state.selectedMessages.includes(id)){
+    var found = false;
+    var indexSelect = null
+    for(var i = 0; i < this.state.selectedMessages.length; i++) {
+      if (this.state.selectedMessages[i] === id){
+        found = true;
+        indexSelect = i
+      }
+    }
+    if (found === false){
       this.setState({
         selectedMessages: this.state.selectedMessages.concat(id)
       })
+    } else if (found === true){
+      var newSelected = this.state.selectedMessages;
+      newSelected.splice(indexSelect, 1);
+      this.setState({
+        selectedMessages: newSelected
+      })
     }
-    console.log(this.state.selectedMessages)
   }
 
   render() {
