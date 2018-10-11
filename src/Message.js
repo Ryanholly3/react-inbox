@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Label from './Label'
 
+var bool = false;
 
 class Message extends React.Component {
 
@@ -19,7 +20,6 @@ class Message extends React.Component {
     e.preventDefault();
 
     var strSelect = this.props.id.toString();
-    console.log(strSelect)
     this.props.selectToggle(strSelect);
   }
 
@@ -55,10 +55,17 @@ class Message extends React.Component {
     } else  {
       return '';
     }
+  }
 
-    console.log('this.props.id:', this.props.id);
-    console.log('this.props.currentSelected:', this.props.currentSelected)
-
+  checkRender = () => {
+    console.log('checkRender called!')
+    if(this.props.currentSelected.includes(this.props.id.toString())){
+      console.log('true')
+      return true;
+    } else  {
+      console.log('false')
+      return false;
+    }
   }
 
   labeled = () => {
@@ -66,13 +73,15 @@ class Message extends React.Component {
   }
 
   render(){
+
+    console.log("message rendering:", this.props.id)
     return(
       <form>
-        <div className={`row message ${this.readStatus()} ${this.selectRender()}`} onClick={ this.changeSelected }>
+        <div className={`row message ${this.readStatus()} ${this.selectRender()}`}>
           <div className="col-xs-1">
             <div className="row">
               <div className="col-xs-2">
-                <input type="checkbox" />
+                <input type="checkbox" checked={ this.checkRender() } onClick={ this.changeSelected }/>
               </div>
               <div className="col-xs-2">
                 { this.starredMessage() }
