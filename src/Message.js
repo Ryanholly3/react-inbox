@@ -48,7 +48,6 @@ class Message extends React.Component {
   }
 
   checkRender = () => {
-    console.log("selectRender id", this.props.id)
     if(this.props.selectedMessages.includes(this.props.id)){
       return(
         <input type="checkbox" onChange={ this.changeSelected } checked={true}/>
@@ -73,7 +72,6 @@ class Message extends React.Component {
   }
 
   render(){
-    console.log("selectedMessages", this.props.selectedMessages)
     return(
       <form>
         <div className={`row message ${this.readStatus()} ${ this.selectRender() }`}>

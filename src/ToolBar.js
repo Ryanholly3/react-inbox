@@ -19,6 +19,25 @@ class ToolBar extends React.Component {
     }
   }
 
+  markAsRead = () => {
+    var unreadSelected = [];
+    if(this.props.selectedMessages !== []){
+      for(var i = 0; i < this.props.selectedMessages.length; i++){
+        let currentId = this.props.selectedMessages[i]
+        for(var j=0; j < this.props.initialMessages.length; j++){
+          if (this.props.initialMessages[j].id === currentId && this.props.initialMessages[j].read === false){
+            unreadSelected.push(currentId);
+          }
+        }
+      }
+      this.props.markAsRead(unreadSelected);
+    }
+  }
+
+  markAsUnread = () => {
+
+  }
+
   //********** RENDERING METHODS *************//
 
   selectBoxRender = () => {
@@ -55,11 +74,11 @@ class ToolBar extends React.Component {
             { this.selectBoxRender() }
           </button>
 
-          <button className="btn btn-default">
+          <button className="btn btn-default" onClick={ this.markAsRead }>
             Mark As Read
           </button>
 
-          <button className="btn btn-default">
+          <button className="btn btn-default" onClick={ this.markAsUnread }>
             Mark As Unread
           </button>
 

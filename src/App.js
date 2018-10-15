@@ -71,12 +71,33 @@ class App extends Component {
     })
   }
 
+  markAsRead = (unreadSelected) => {
+    console.log(unreadSelected)
+    // const response = await fetch('http://localhost:8082/api/messages', {
+    //   method: 'POST',
+    //   body: JSON.stringify(item),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'Accept': 'application/json',
+    //   }
+    // })
+    // const posted = await response.json()
+    // console.log('returned from post', posted)
+    // this.setState({
+    //   initialMessages: this.state.initialMessages.concat(posted)
+    // })
+  }
+
+  markAsUnread = () => {
+
+  }
+
   render() {
     return (
       <div className="App">
         <h1> REACT INBOX </h1>
         <div className="components">
-          <ToolBar changeCompose={ this.changeCompose } selectToggleAll={ this.selectToggleAll } unselectToggleAll={ this.unselectToggleAll } initialMessages={ this.state.initialMessages } selectedMessages={ this.state.selectedMessages }/>
+          <ToolBar changeCompose={ this.changeCompose } selectToggleAll={ this.selectToggleAll } unselectToggleAll={ this.unselectToggleAll } initialMessages={ this.state.initialMessages } selectedMessages={ this.state.selectedMessages } markAsRead={ this.markAsRead } markAsUnread={ this.markAsUnread }/>
           <MessageList initialMessages={ this.state.initialMessages } composeWindow={ this.state.composeWindow } selectToggle={ this.selectToggle } selectedMessages={ this.state.selectedMessages }/>
         </div>
       </div>
