@@ -21,6 +21,10 @@ class Message extends React.Component {
     this.props.selectToggle(this.props.id);
   }
 
+  starChange = () => {
+    this.props.starChange(this.props.id);
+  }
+
 
   //********* RENDER METHODS ************//
   readStatus = () => {
@@ -34,15 +38,15 @@ class Message extends React.Component {
   starredMessage = () => {
     if(this.props.starred === true) {
       return (
-        <i className="star fa fa-star"></i>
+        <i className="star fa fa-star" onClick={ this.starChange }></i>
       )
     } else if (this.props.starred === false){
       return (
-        <i className="star fa fa-star-o"></i>
+        <i className="star fa fa-star-o" onClick={ this.starChange }></i>
       )
     } else {
       return (
-        <i className="star fa fa-star"></i>
+        <i className="star fa fa-star" onClick={ this.starChange }></i>
       )
     }
   }

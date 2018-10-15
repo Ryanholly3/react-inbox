@@ -83,8 +83,19 @@ class ToolBar extends React.Component {
     }
   }
 
-  deleteMessage = () => {
-
+  deleteMessages = () => {
+    var messagesToDelete = [];
+    if(this.props.selectedMessages !== []){
+      for(var i = 0; i < this.props.selectedMessages.length; i++){
+        let currentId = this.props.selectedMessages[i];
+        for(let j = 0; j < this.props.initialMessages.length; j++){
+          if(this.props.initialMessages[j].id === currentId){
+            messagesToDelete.push(currentId);
+          }
+        }
+        this.props.deleteMessages(messagesToDelete);
+      }
+    }
   }
 
   //********** RENDERING METHODS *************//
@@ -146,7 +157,7 @@ class ToolBar extends React.Component {
             <option value="gschool">gschool</option>
           </select>
 
-          <button className="btn btn-default" onClick={ this.deleteMessage }>
+          <button className="btn btn-default" onClick={ this.deleteMessages }>
             <i className="fa fa-trash-o"></i>
           </button>
         </div>

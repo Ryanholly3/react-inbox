@@ -37,7 +37,7 @@ class MessageList extends React.Component {
   }
 
   renderList(){
-    return this.props.initialMessages.map((message, i) => <Message key={ i } id={ message.id } subject={ message.subject } read={ message.read } starred={ message.starred } labels={ message.labels} body={ message.body } selectToggle={ this.props.selectToggle } selectedMessages={ this.props.selectedMessages }/>)
+    return this.props.initialMessages.map((message, i) => <Message key={ i } id={ message.id } subject={ message.subject } read={ message.read } starred={ message.starred } labels={ message.labels} body={ message.body } selectToggle={ this.props.selectToggle } selectedMessages={ this.props.selectedMessages } starChange={ this.props.starChange }/>)
   }
 
   render() {

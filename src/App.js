@@ -156,8 +156,49 @@ class App extends Component {
     })
   }
 
-  deleteMessage = async (messageId) => {
+  deleteMessages = async (messageIds) => {
+    //ONLY can delete one at a time. come back once learn backend
+    var patch = {
+      messageIds: messageIds,
+      command: 'delete',
+    };
 
+    const response = await fetch('http://localhost:8082/api/messages', {
+      method: 'PATCH',
+      body: JSON.stringify(patch),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+    const posted = await response.json()
+    console.log(posted)
+    this.setState({
+      initialMessages: posted
+    })
+
+  }
+
+  starChange = async (messageId) => {
+    //INVERTS ALL STARS, not a single one....
+    console.log('starchange ID:', messageId)
+    var patch = {
+      message: messageId,
+      command: 'star',
+    }
+
+    const response = await fetch('http://localhost:8082/api/messages', {
+      method: 'PATCH',
+      body: JSON.stringify(patch),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+    const posted = await response.json()
+    this.setState({
+      initialMessages: posted
+    })
   }
 
   render() {
@@ -165,8 +206,8 @@ class App extends Component {
       <div className="App">
         <h1> REACT INBOX </h1>
         <div className="components">
-          <ToolBar changeCompose={ this.changeCompose } selectToggleAll={ this.selectToggleAll } unselectToggleAll={ this.unselectToggleAll } initialMessages={ this.state.initialMessages } selectedMessages={ this.state.selectedMessages } markAsRead={ this.markAsRead } markAsUnread={ this.markAsUnread } applyLabel={ this.applyLabel } removeLabel={ this.removeLabel } deleteMessage={ this.deleteMessage }/>
-          <MessageList initialMessages={ this.state.initialMessages } composeWindow={ this.state.composeWindow } selectToggle={ this.selectToggle } selectedMessages={ this.state.selectedMessages }/>
+          <ToolBar changeCompose={ this.changeCompose } selectToggleAll={ this.selectToggleAll } unselectToggleAll={ this.unselectToggleAll } initialMessages={ this.state.initialMessages } selectedMessages={ this.state.selectedMessages } markAsRead={ this.markAsRead } markAsUnread={ this.markAsUnread } applyLabel={ this.applyLabel } removeLabel={ this.removeLabel } deleteMessages={ this.deleteMessages }/>
+          <MessageList initialMessages={ this.state.initialMessages } composeWindow={ this.state.composeWindow } selectToggle={ this.selectToggle } selectedMessages={ this.state.selectedMessages } starChange={ this.starChange }/>
         </div>
       </div>
     );
