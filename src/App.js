@@ -71,24 +71,59 @@ class App extends Component {
     })
   }
 
-  markAsRead = (unreadSelected) => {
+   markAsRead = async (unreadSelected) => {
     console.log(unreadSelected)
-    // const response = await fetch('http://localhost:8082/api/messages', {
-    //   method: 'POST',
-    //   body: JSON.stringify(item),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Accept': 'application/json',
-    //   }
-    // })
-    // const posted = await response.json()
-    // console.log('returned from post', posted)
-    // this.setState({
-    //   initialMessages: this.state.initialMessages.concat(posted)
-    // })
+    var patch = {
+      messageIds: unreadSelected,
+      command: 'read',
+      read: true
+    }
+
+    const response = await fetch('http://localhost:8082/api/messages', {
+      method: 'PATCH',
+      body: JSON.stringify(patch),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+    const posted = await response.json()
+    console.log('returned from post', posted)
+    this.setState({
+      initialMessages: posted
+    })
   }
 
-  markAsUnread = () => {
+  markAsUnread = async (readSelected) => {
+    console.log(readSelected)
+    var patch = {
+      messageIds: readSelected,
+      command: 'read',
+      read: false
+    }
+
+    const response = await fetch('http://localhost:8082/api/messages', {
+      method: 'PATCH',
+      body: JSON.stringify(patch),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+    const posted = await response.json()
+    console.log('returned from post', posted)
+    this.setState({
+      initialMessages: posted
+    })
+
+
+  }
+
+  applyLabel = () => {
+
+  }
+
+  removeLabel = () => {
 
   }
 
@@ -97,7 +132,7 @@ class App extends Component {
       <div className="App">
         <h1> REACT INBOX </h1>
         <div className="components">
-          <ToolBar changeCompose={ this.changeCompose } selectToggleAll={ this.selectToggleAll } unselectToggleAll={ this.unselectToggleAll } initialMessages={ this.state.initialMessages } selectedMessages={ this.state.selectedMessages } markAsRead={ this.markAsRead } markAsUnread={ this.markAsUnread }/>
+          <ToolBar changeCompose={ this.changeCompose } selectToggleAll={ this.selectToggleAll } unselectToggleAll={ this.unselectToggleAll } initialMessages={ this.state.initialMessages } selectedMessages={ this.state.selectedMessages } markAsRead={ this.markAsRead } markAsUnread={ this.markAsUnread } applyLabel={ this.applyLabel } removeLabel={ this.removeLabel }/>
           <MessageList initialMessages={ this.state.initialMessages } composeWindow={ this.state.composeWindow } selectToggle={ this.selectToggle } selectedMessages={ this.state.selectedMessages }/>
         </div>
       </div>

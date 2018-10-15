@@ -35,7 +35,18 @@ class ToolBar extends React.Component {
   }
 
   markAsUnread = () => {
-
+    var readSelected = [];
+    if(this.props.selectedMessages !== []){
+      for(var i = 0; i < this.props.selectedMessages.length; i++){
+        let currentId = this.props.selectedMessages[i]
+        for(var j=0; j < this.props.initialMessages.length; j++){
+          if (this.props.initialMessages[j].id === currentId && this.props.initialMessages[j].read === true){
+            readSelected.push(currentId);
+          }
+        }
+      }
+      this.props.markAsUnread(readSelected);
+    }
   }
 
   //********** RENDERING METHODS *************//
@@ -55,6 +66,14 @@ class ToolBar extends React.Component {
           <i className="fa fa-square-o"></i>
       )
     }
+  }
+
+  applyLabel = () => {
+
+  }
+
+  removeLabel = () => {
+
   }
 
   render() {
@@ -82,14 +101,14 @@ class ToolBar extends React.Component {
             Mark As Unread
           </button>
 
-          <select className="form-control label-select">
+          <select className="form-control label-select" onChange={ this.applyLabel }>
             <option>Apply label</option>
             <option value="dev">dev</option>
             <option value="personal">personal</option>
             <option value="gschool">gschool</option>
           </select>
 
-          <select className="form-control label-select">
+          <select className="form-control label-select" onChange={ this.removeLabel }>
             <option>Remove label</option>
             <option value="dev">dev</option>
             <option value="personal">personal</option>
