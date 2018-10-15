@@ -12,7 +12,7 @@ class ToolBar extends React.Component {
   toggleAll = (e) => {
     e.preventDefault();
 
-    if(this.props.currentSelected.length === this.props.initialMessages.length){
+    if(this.props.selectedMessages.length === this.props.initialMessages.length){
       this.props.unselectToggleAll();
     } else {
       this.props.selectToggleAll();
@@ -23,15 +23,15 @@ class ToolBar extends React.Component {
 
   selectBoxRender = () => {
 
-    if(this.props.currentSelected.length === this.props.initialMessages.length){
+    if(this.props.selectedMessages.length === this.props.initialMessages.length){
       return(
           <i className="fa fa-check-square-o"></i>
       )
-    } else if(this.props.currentSelected.length > 0){
+    } else if(this.props.selectedMessages.length > 0){
       return(
           <i className="fa fa-minus-square-o"></i>
       )
-    } else if(this.props.currentSelected.length === 0){
+    } else if(this.props.selectedMessages.length === 0){
       return(
           <i className="fa fa-square-o"></i>
       )

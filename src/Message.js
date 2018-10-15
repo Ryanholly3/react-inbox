@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Label from './Label'
 
 var bool = false;
+var select = ''
 
 class Message extends React.Component {
 
@@ -16,11 +17,8 @@ class Message extends React.Component {
       )
   }
 
-  changeSelected = (e) => {
-    e.preventDefault();
-
-    var strSelect = this.props.id.toString();
-    this.props.selectToggle(strSelect);
+  changeSelected = () => {
+    this.props.selectToggle(this.props.id);
   }
 
 
@@ -49,22 +47,24 @@ class Message extends React.Component {
     }
   }
 
-  selectRender = () => {
-    if(this.props.currentSelected.includes(this.props.id.toString())){
-      return 'selected';
+  checkRender = () => {
+    console.log("selectRender id", this.props.id)
+    if(this.props.selectedMessages.includes(this.props.id)){
+      return(
+        <input type="checkbox" onChange={ this.changeSelected } checked={true}/>
+      );
     } else  {
-      return '';
+      return(
+        <input type="checkbox" onChange={ this.changeSelected } checked={false}/>
+      )
     }
   }
 
-  checkRender = () => {
-    console.log('checkRender called!')
-    if(this.props.currentSelected.includes(this.props.id.toString())){
-      console.log('true')
-      return true;
+  selectRender = () => {
+    if(this.props.selectedMessages.includes(this.props.id)){
+      return 'selected';
     } else  {
-      console.log('false')
-      return false;
+      return '';
     }
   }
 
@@ -73,15 +73,14 @@ class Message extends React.Component {
   }
 
   render(){
-
-    console.log("message rendering:", this.props.id)
+    console.log("selectedMessages", this.props.selectedMessages)
     return(
       <form>
-        <div className={`row message ${this.readStatus()} ${this.selectRender()}`}>
+        <div className={`row message ${this.readStatus()} ${ this.selectRender() }`}>
           <div className="col-xs-1">
             <div className="row">
               <div className="col-xs-2">
-                <input type="checkbox" checked={ this.checkRender() } onClick={ this.changeSelected }/>
+                { this.checkRender() }
               </div>
               <div className="col-xs-2">
                 { this.starredMessage() }
