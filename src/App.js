@@ -72,7 +72,6 @@ class App extends Component {
   }
 
    markAsRead = async (unreadSelected) => {
-    console.log(unreadSelected)
     var patch = {
       messageIds: unreadSelected,
       command: 'read',
@@ -88,14 +87,12 @@ class App extends Component {
       }
     })
     const posted = await response.json()
-    console.log('returned from post', posted)
     this.setState({
       initialMessages: posted
     })
   }
 
   markAsUnread = async (readSelected) => {
-    console.log(readSelected)
     var patch = {
       messageIds: readSelected,
       command: 'read',
@@ -111,19 +108,55 @@ class App extends Component {
       }
     })
     const posted = await response.json()
-    console.log('returned from post', posted)
     this.setState({
       initialMessages: posted
     })
 
-
   }
 
-  applyLabel = () => {
+  applyLabel = async (label, messageIds) => {
+    var patch = {
+      messageIds: messageIds,
+      command: 'addLabel',
+      label: label
+    }
 
+    const response = await fetch('http://localhost:8082/api/messages', {
+      method: 'PATCH',
+      body: JSON.stringify(patch),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+    const posted = await response.json()
+    this.setState({
+      initialMessages: posted
+    })
   }
 
-  removeLabel = () => {
+  removeLabel = async (label, messageIds) => {
+    var patch = {
+      messageIds: messageIds,
+      command: 'removeLabel',
+      label: label
+    }
+
+    const response = await fetch('http://localhost:8082/api/messages', {
+      method: 'PATCH',
+      body: JSON.stringify(patch),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+    const posted = await response.json()
+    this.setState({
+      initialMessages: posted
+    })
+  }
+
+  deleteMessage = async (messageId) => {
 
   }
 
@@ -132,7 +165,7 @@ class App extends Component {
       <div className="App">
         <h1> REACT INBOX </h1>
         <div className="components">
-          <ToolBar changeCompose={ this.changeCompose } selectToggleAll={ this.selectToggleAll } unselectToggleAll={ this.unselectToggleAll } initialMessages={ this.state.initialMessages } selectedMessages={ this.state.selectedMessages } markAsRead={ this.markAsRead } markAsUnread={ this.markAsUnread } applyLabel={ this.applyLabel } removeLabel={ this.removeLabel }/>
+          <ToolBar changeCompose={ this.changeCompose } selectToggleAll={ this.selectToggleAll } unselectToggleAll={ this.unselectToggleAll } initialMessages={ this.state.initialMessages } selectedMessages={ this.state.selectedMessages } markAsRead={ this.markAsRead } markAsUnread={ this.markAsUnread } applyLabel={ this.applyLabel } removeLabel={ this.removeLabel } deleteMessage={ this.deleteMessage }/>
           <MessageList initialMessages={ this.state.initialMessages } composeWindow={ this.state.composeWindow } selectToggle={ this.selectToggle } selectedMessages={ this.state.selectedMessages }/>
         </div>
       </div>

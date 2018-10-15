@@ -37,9 +37,9 @@ class ToolBar extends React.Component {
   markAsUnread = () => {
     var readSelected = [];
     if(this.props.selectedMessages !== []){
-      for(var i = 0; i < this.props.selectedMessages.length; i++){
-        let currentId = this.props.selectedMessages[i]
-        for(var j=0; j < this.props.initialMessages.length; j++){
+      for(let i = 0; i < this.props.selectedMessages.length; i++){
+        let currentId = this.props.selectedMessages[i];
+        for(let j = 0; j < this.props.initialMessages.length; j++){
           if (this.props.initialMessages[j].id === currentId && this.props.initialMessages[j].read === true){
             readSelected.push(currentId);
           }
@@ -47,6 +47,44 @@ class ToolBar extends React.Component {
       }
       this.props.markAsUnread(readSelected);
     }
+  }
+
+  applyLabel = (e) => {
+    e.preventDefault()
+
+    var messagesWithLabels = [];
+    if(this.props.selectedMessages !== [] && e.target.value !== 'Apply label'){
+      for(var i = 0; i < this.props.selectedMessages.length; i++){
+        let currentId = this.props.selectedMessages[i];
+        for(let j = 0; j < this.props.initialMessages.length; j++){
+          if(this.props.initialMessages[j].id === currentId && !this.props.initialMessages[j].labels.includes(e.target.value)){
+            messagesWithLabels.push(currentId);
+          }
+        }
+        this.props.applyLabel(e.target.value, messagesWithLabels)
+      }
+    }
+  }
+
+  removeLabel = (e) => {
+    e.preventDefault()
+
+    var messagesWithoutLabels = [];
+    if(this.props.selectedMessages !== []){
+      for(var i = 0; i < this.props.selectedMessages.length; i++){
+        let currentId = this.props.selectedMessages[i];
+        for(let j = 0; j < this.props.initialMessages.length; j++){
+          if(this.props.initialMessages[j].id === currentId && this.props.initialMessages[j].labels.includes(e.target.value)){
+            messagesWithoutLabels.push(currentId);
+          }
+        }
+        this.props.removeLabel(e.target.value, messagesWithoutLabels)
+      }
+    }
+  }
+
+  deleteMessage = () => {
+
   }
 
   //********** RENDERING METHODS *************//
@@ -68,13 +106,6 @@ class ToolBar extends React.Component {
     }
   }
 
-  applyLabel = () => {
-
-  }
-
-  removeLabel = () => {
-
-  }
 
   render() {
     return (
@@ -115,7 +146,7 @@ class ToolBar extends React.Component {
             <option value="gschool">gschool</option>
           </select>
 
-          <button className="btn btn-default">
+          <button className="btn btn-default" onClick={ this.deleteMessage }>
             <i className="fa fa-trash-o"></i>
           </button>
         </div>
