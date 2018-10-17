@@ -180,10 +180,8 @@ class App extends Component {
   }
 
   starChange = async (messageId) => {
-    //INVERTS ALL STARS, not a single one....
-    console.log('starchange ID:', messageId)
     var patch = {
-      message: messageId,
+      messageIds: messageId,
       command: 'star',
     }
 
@@ -201,13 +199,35 @@ class App extends Component {
     })
   }
 
+  addMessage = async (subject, body) => {
+    var message = {
+      subject: subject,
+      starred: false,
+      labels: [],
+      body: body,
+    }
+
+    const response = await fetch('http://localhost:8082/api/messages', {
+      method: 'POST',
+      body: JSON.stringify(message),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+    const posted = await response.json()
+    this.setState({
+      initialMessages: this.state.initialMessages.concat(posted)
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <h1> REACT INBOX </h1>
         <div className="components">
           <ToolBar changeCompose={ this.changeCompose } selectToggleAll={ this.selectToggleAll } unselectToggleAll={ this.unselectToggleAll } initialMessages={ this.state.initialMessages } selectedMessages={ this.state.selectedMessages } markAsRead={ this.markAsRead } markAsUnread={ this.markAsUnread } applyLabel={ this.applyLabel } removeLabel={ this.removeLabel } deleteMessages={ this.deleteMessages }/>
-          <MessageList initialMessages={ this.state.initialMessages } composeWindow={ this.state.composeWindow } selectToggle={ this.selectToggle } selectedMessages={ this.state.selectedMessages } starChange={ this.starChange }/>
+          <MessageList initialMessages={ this.state.initialMessages } composeWindow={ this.state.composeWindow } selectToggle={ this.selectToggle } selectedMessages={ this.state.selectedMessages } starChange={ this.starChange } addMessage={ this.addMessage }/>
         </div>
       </div>
     );

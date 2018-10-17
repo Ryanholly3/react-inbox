@@ -117,13 +117,25 @@ class ToolBar extends React.Component {
     }
   }
 
+  unreadCount = () => {
+    let count = 0;
+    for(let i = 0; i < this.props.initialMessages.length; i++){
+      if (this.props.initialMessages[i].read === false){
+        count += 1
+      }
+    }
+    return count;
+  }
+
 
   render() {
+    var unreadMessageNum = 1
+
     return (
       <div className="row toolbar">
         <div className="col-md-12">
           <p className="pull-right">
-            <span className="badge badge">2</span>
+            <span className="badge badge">{ this.unreadCount() }</span>
             unread messages
           </p>
 

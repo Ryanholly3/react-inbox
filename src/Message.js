@@ -22,7 +22,10 @@ class Message extends React.Component {
   }
 
   starChange = () => {
-    this.props.starChange(this.props.id);
+
+    var starArray = [];
+    starArray.push(this.props.id)
+    this.props.starChange(starArray);
   }
 
 
