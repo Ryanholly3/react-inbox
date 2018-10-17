@@ -33,7 +33,6 @@ class App extends Component {
   }
 
   selectToggle = (id) => {
-    console.log('id:', id)
     var found = false;
     var indexSelect = null;
     for(var i = 0; i < this.state.selectedMessages.length; i++) {
@@ -171,8 +170,7 @@ class App extends Component {
         'Accept': 'application/json',
       }
     })
-    const posted = await response.json()
-    console.log(posted)
+    const posted = await response.json();
     this.setState({
       initialMessages: posted
     })
@@ -200,8 +198,7 @@ class App extends Component {
   }
 
   addMessage = async (subject, body) => {
-    console.log("subject:", subject)
-    console.log("body:", body)
+
     var message = {
       subject: subject,
       starred: false,
