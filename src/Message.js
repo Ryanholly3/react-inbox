@@ -95,7 +95,7 @@ class Message extends React.Component {
           <div className="col-xs-11">
             { this.labeled() }
             <a href="#">
-              Here is some message text that has a bunch of stuff
+              { this.props.subject }
             </a>
           </div>
         </div>

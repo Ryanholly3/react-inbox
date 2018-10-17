@@ -200,6 +200,8 @@ class App extends Component {
   }
 
   addMessage = async (subject, body) => {
+    console.log("subject:", subject)
+    console.log("body:", body)
     var message = {
       subject: subject,
       starred: false,
